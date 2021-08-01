@@ -8,18 +8,25 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+    <script src="./firebase.js"></script>
+    <script src="./header.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jdenticon@3.1.0/dist/jdenticon.min.js" async
         integrity="sha384-VngWWnG9GS4jDgsGEUNaoRQtfBGiIKZTiXwm9KpgAeaRn6Y/1tAFiyXqSzqC8Ga/"
         crossorigin="anonymous">
     </script>
-
+    <script src="./cart.js"></script>
 </head>
 <body>
     <div class="bg-white w-full">
         <div class="header h-16 bg-gray-900 flex items-center">
             <div class="logo w-1/5 h-16 ml-10 ">
-                <img class="w-28 h-16 object-contain"   src="https://www.pinclipart.com/picdir/big/57-576184_view-our-amazon-storefront-amazon-logo-white-png.png" >
+                <a href="./index.html">
+                    <img class="w-28 h-16 object-contain"   src="https://www.pinclipart.com/picdir/big/57-576184_view-our-amazon-storefront-amazon-logo-white-png.png" >
+                </a>
             </div>
             <input class="h-9 w-30 bg-gray-800 border border-gray-500 border-opacity-75 rounded-l-xl px-3 text-white ml-6 focus:outline-none placeholder-white" id="search" type="text" placeholder="Search...">
             <div class="categories h-9 w-30 bg-gray-800 border border-gray-500 border-opacity-75 px-3 text-white flex items-center ">
@@ -38,7 +45,9 @@
                 <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
-                  <div class="cart-icon h-10 w-10 bg-yellow-500 flex items-center justify-center rounded-xl">
+                  <!-- Cart Icon -->
+                  <div class="relative cart-icon h-10 w-10 bg-yellow-500 flex items-center justify-center rounded-xl">
+                    <div class="cart-item-number text-gray-800 text-xs absolute -top-1 -right-1 h-4 w-4 bg-white rounded-full flex justify-center items-center"></div>
                     <svg class="h-4 w-4 text-gray-600" xmlns="http://owww.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
@@ -50,7 +59,7 @@
             </div>
         </div>
         <div class="main h-screen flex">
-            <div class="border-t-2 border-gray-700 main-sidebar w-1/5 bg-gray-900 p-6">
+            <div class="hidden md:block border-t-2 border-gray-700 main-sidebar w-1/5 bg-gray-900 p-6">
                 <div class="sidebar-categories">
                     <div class="sidebar-main-category text-yellow-500 cursor-pointer flex font-bold p-2 bg-gray-700 rounded-lg">
                         <span class="w-8">
@@ -107,67 +116,12 @@
                     <span class="w-10"></span>
                 </div>
                 <div class="cart-items mt-5">
-                    <div class="cart-item flex items-center pb-4 border-b border-gray-100">
-                        <div class="cart-item-image w-40 h-24 bg-white p-4 rounded-lg">
-                            <img class="w-full h-full object-contain" src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6418/6418603_sd.jpg">
-                        </div>
-                        <div class="cart-item-details flex-grow">
-                            <div class="cart-item-title font-bold text-sm text-gray-600">
-                                Apple MacBook Pro 13,3
-                            </div>
-                            <div class="cart-item-brand text-sm text-gray-400">
-                                Apple
-                            </div>
-                        </div>
-                        <div class="cart-item-counter w-48 flex items-center">
-                            <div class="chevron-left text-gray-400 bg-gray-100 rounded h-6 w-6 flex justify-center items-center hover:bg-gray-200 mr-2 cursor-pointer">
-                                <i class="fas fa-chevron-left fa-xs"></i>
-                            </div>
-                            <h4 class="text-gray-400">x1</h4>
-                            <div class="chevron-right text-gray-400 bg-gray-100 rounded h-6 w-6 flex justify-center items-center hover:bg-gray-200 ml-2 cursor-pointer">                                
-                                <i class="fas fa-chevron-right fa-xs"></i>
-                            </div>
-                        </div>
-                        <div class="cart-item-total-cost w-48 font-bold text-gray-400">
-                            $1,149.00
-                        </div>
-                        <div class="cart-item-delete w-10 font-bold text-gray-300 cursor-pointer hover:text-gray-400">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
-                    <div class="cart-item border-b border-gray-100 flex items-center pb-4">
-                        <div class="w-40 h-24 bg-white p-4 rounded-lg">
-                            <img class="w-full h-full object-contain" src="https://m.media-amazon.com/images/I/61-PblYntsL._AC_SL1500_.jpg" > 
-                        </div>
-                        <div class="cart-item-details flex-grow">
-                            <div class="cart-item-title mt-2 font-bold text-sm text-gray-600">
-                                Nintendo Switch
-                            </div>
-                            <div class="cart-item-brand text-sm text-gray-400">
-                                Nintendo
-                            </div>
-                        </div>
-                        <div class="cart-item-counter w-48 flex items-center">
-                            <div class="cursor-pointer text-gray-400 bg-gray-100 hover:bg-gray-200 rounded mr-2 h-6 w-6 flex justify-center items-center">
-                                <i class="fas fa-chevron-left fa-xs"></i>
-                            </div>
-                            <h4 class="text-gray-400">x1</h4> 
-                            <div class="cursor-pointer text-gray-400 bg-gray-100 hover:bg-gray-200 rounded ml-2 h-6 w-6 flex justify-center items-center">
-                                <i class="fas fa-chevron-right fa-xs"></i>
-                            </div>
-                        </div>
-                        <div class="cart-item-total-cost w-48 font-bold text-gray-400">
-                            $290.00
-                        </div>
-                        <div class="cart-item-delete w-10 font-bold text-gray-200 hover:text-gray-400">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
+                    <!-- Cart Items from DB -->
                 </div>
                 <div class="complete-order flex justify-end mt-10">
                     <div class="total-cost mr-7">
                         <h2 class="text-gray-400">Total Cost</h2>
-                        <div class="text-gray-600 font-bold total-cost-number text-3xl">
+                        <div class="total-cost-number text-gray-600 font-bold total-cost-number text-3xl">
                             $1,439.00
                         </div>
                     </div>
